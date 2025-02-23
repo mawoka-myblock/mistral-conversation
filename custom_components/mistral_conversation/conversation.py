@@ -181,17 +181,25 @@ class MistralConversationEntity(
             response=intent_response, conversation_id=chat_log.conversation_id
         )
 
+    # async def async_process(
+    #     self, user_input: conversation.ConversationInput
+    # ) -> conversation.ConversationResult:
+    #     """Process a sentence."""
+    #     with (
+    #         chat_session.async_get_chat_session(
+    #             self.hass, user_input.conversation_id
+    #         ) as session,
+    #         conversation.async_get_chat_log(self.hass, session, user_input) as chat_log,
+    #     ):
+    #         return await self._async_handle_message(user_input, chat_log)
     async def async_process(
         self, user_input: conversation.ConversationInput
     ) -> conversation.ConversationResult:
         """Process a sentence."""
-        with (
-            chat_session.async_get_chat_session(
-                self.hass, user_input.conversation_id
-            ) as session,
-            conversation.async_get_chat_log(self.hass, session, user_input) as chat_log,
-        ):
-            return await self._async_handle_message(user_input, chat_log)
+        async with conversation.async_get_chat_session(
+            self.hass, user_input
+        ) as session:
+            return await self._async_handle_message(user_input, session)
 
     async def _async_entry_update_listener(
         self, hass: HomeAssistant, entry: ConfigEntry
