@@ -7,6 +7,6 @@
   "dependencies": ["conversation"],
   "documentation": "https://www.home-assistant.io/integrations/mistral_conversation",
   "iot_class": "cloud_polling",
-  "quality_scale": "bronze",
-  "requirements": ["mistralai==1.5.0"]
+  "requirements": ["mistralai==1.5.0"],
+  "version": "0.1.0"
 }
